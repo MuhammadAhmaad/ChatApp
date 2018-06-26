@@ -24,6 +24,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             setupChannels();
@@ -49,7 +50,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         PendingIntent resultPendingIntent =
                 PendingIntent.getActivity(this,0,resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notificationId /* ID of notification */, mBuilder.build());
 
 
@@ -60,7 +60,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         CharSequence adminChannelName = getString(R.string.notifications_admin_channel_name);
         String adminChannelDescription = getString(R.string.notifications_admin_channel_description);
         NotificationChannel adminChannel;
-        adminChannel = new NotificationChannel(Globals.NOTIFICATION_CHANNEL_ID, adminChannelName, NotificationManager.IMPORTANCE_LOW);
+        adminChannel = new NotificationChannel(Globals.NOTIFICATION_CHANNEL_ID, adminChannelName, NotificationManager.IMPORTANCE_HIGH);
         adminChannel.setDescription(adminChannelDescription);
         adminChannel.enableLights(true);
         adminChannel.setLightColor(Color.RED);

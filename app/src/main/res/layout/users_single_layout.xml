@@ -33,9 +33,10 @@
 
     <ImageView
         android:id="@+id/user_single_online_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:visibility="gone"
+        android:layout_marginTop="5dp"
         android:layout_alignTop="@+id/user_single_name"
         android:layout_marginStart="41dp"
         android:layout_toEndOf="@+id/user_single_name"

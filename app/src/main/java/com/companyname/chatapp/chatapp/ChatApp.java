@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 public class ChatApp extends Application {
     private DatabaseReference mUserDatabase;
     private FirebaseAuth mAuth;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -24,19 +25,21 @@ public class ChatApp extends Application {
 
 
         mAuth = FirebaseAuth.getInstance();
-        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
-        mUserDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot!=null) {
-                    mUserDatabase.child("online").onDisconnect().setValue(false);
+        if (mAuth.getCurrentUser() != null) {
+            mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
+            mUserDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot != null) {
+                        mUserDatabase.child("online").onDisconnect().setValue(false);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }
     }
 }
