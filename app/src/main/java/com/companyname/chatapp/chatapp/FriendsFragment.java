@@ -1,7 +1,10 @@
 package com.companyname.chatapp.chatapp;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -70,15 +73,42 @@ public class FriendsFragment extends Fragment {
             @Override
             protected void populateViewHolder(final FriendsViewHolder viewHolder, final Friends model, int position) {
                 viewHolder.setStatus(model.getDate());
-                String list_user_id = getRef(position).getKey();
+                final String list_user_id = getRef(position).getKey();
                 mUsersDatabase.child(list_user_id).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        User user_list = dataSnapshot.getValue(User.class);
+                        final User user_list = dataSnapshot.getValue(User.class);
                         viewHolder.setName(user_list.getName());
 //                        viewHolder.setStatus(user_list.getStatus());
                         viewHolder.setImage(user_list.getImage(), getContext());
                         viewHolder.setUserOnline(user_list.getOnline());
+                        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                CharSequence options[] = new CharSequence[]{"Open Profile","Send Message"};
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                builder.setTitle("Select option");
+                                builder.setItems(options, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        if(i==0)
+                                        {
+                                            Intent profileIntent = new Intent(getContext(),ProfileActivity.class);
+                                            profileIntent.putExtra("user_id",list_user_id);
+                                            startActivity(profileIntent);
+                                        }
+                                        if(i==1)
+                                        {
+                                            Intent chatIntent = new Intent(getContext(),ChatActivity.class);
+                                            chatIntent.putExtra("user_id",list_user_id);
+                                            chatIntent.putExtra("user_name",user_list.getName());
+                                            startActivity(chatIntent);
+                                        }
+                                    }
+                                });
+                                builder.show();
+                            }
+                        });
 
                     }
 
@@ -111,16 +141,17 @@ public class FriendsFragment extends Fragment {
         }
         public void setImage(String url, Context context) {
             CircleImageView userImageView = (CircleImageView) mView.findViewById(R.id.user_single_image);
+            if(context!=null)
             Glide.with(context)
                     .load(url)
                     .apply(new RequestOptions()
                             .placeholder(R.drawable.ic_person_black_24dp))
                     .into(userImageView);
         }
-        public void setUserOnline(boolean online_status)
+        public void setUserOnline(long online_status)
         {
             ImageView icon = (ImageView)mView.findViewById(R.id.user_single_online_icon);
-            if(online_status)
+            if(online_status == 0)
                 icon.setVisibility(View.VISIBLE);
             else
                 icon.setVisibility(View.INVISIBLE);

@@ -14,13 +14,13 @@ public class User {
     private String status;
     private String thumbImage;
     private String device_token;
-    private boolean online;
+    private long online;
 
-    public boolean getOnline() {
+    public long getOnline() {
         return online;
     }
 
-    public void setOnline(boolean online) {
+    public void setOnline(long online) {
         this.online = online;
     }
 
