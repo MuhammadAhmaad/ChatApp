@@ -40,4 +40,12 @@
         android:layout_marginStart="32dp"
         android:layout_toEndOf="@+id/message_name_layout"
         android:text="00:00" />
+
+    <ImageView
+        android:id="@+id/message_image_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/message_text_layout"
+        android:layout_below="@+id/message_text_layout"
+        android:src="@drawable/message_text_background" />
 </RelativeLayout>

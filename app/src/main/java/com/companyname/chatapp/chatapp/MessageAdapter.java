@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -80,14 +81,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         if (message_type.equals("text")) {
 
             holder.messageText.setText(c.getMessage());
-//            holder.messageImage.setVisibility(View.INVISIBLE);
+            holder.messageImage.setVisibility(View.INVISIBLE);
 
 
         } else {
 
+            holder.setIsRecyclable(false);
             holder.messageText.setVisibility(View.INVISIBLE);
-//            Glide.with(holder.profileImage.getContext()).load(c.getMessage())
-//                    .placeholder(R.drawable.default_avatar).into(holder.messageImage);
+            Glide.with(mContext).load(c.getMessage()).into(holder.messageImage);
 
         }
 
@@ -105,6 +106,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         public TextView nameText;
         public TextView timeText;
         public CircleImageView profileImage;
+        public ImageView messageImage;
 
         public MessageViewHolder(View itemView) {
             super(itemView);
@@ -112,6 +114,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             profileImage = (CircleImageView) itemView.findViewById(R.id.message_profile_layout);
             nameText = (TextView) itemView.findViewById(R.id.message_name_layout);
             timeText = (TextView) itemView.findViewById(R.id.message_time_layout);
+            messageImage = (ImageView)itemView.findViewById(R.id.message_image_layout);
 
         }
     }
