@@ -144,7 +144,7 @@ public class ChatActivity extends AppCompatActivity {
                         .load(chatUser.getImage())
                         .into(mProfileImage);
                 if (chatUser.getOnline() == 0) {
-                    mLastSeenView.setText("online");
+                    mLastSeenView.setText(getResources().getString(R.string.online));
                 } else {
                     Calendar cal = Calendar.getInstance(Locale.ENGLISH);
                     cal.setTimeInMillis(chatUser.getOnline());

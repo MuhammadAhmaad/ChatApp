@@ -28,4 +28,21 @@
     <string name="_00_00">00:00</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="send_media_button">send media button</string>
+    <string name="send_message_button">send message button</string>
+    <string name="profile_image_view">profile image view</string>
+    <string name="widget_profile_image">widget profile image</string>
+    <string name="message_image_background">message image background</string>
+    <string name="online_offline_indication">online offline indication</string>
+    <string name="enter_a_message">Enter a message ...</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="all_users">All Users</string>
+    <string name="log_out">log Out</string>
+    <string name="online">online</string>
+    <string name="cancel_friend_request">Cancel Friend Request</string>
+    <string name="accept_friend_request">Accept Friend Request</string>
+    <string name="unfriend_person">Unfriend this person</string>
+    <string name="please_wait">Please Wait While loading ..</string>
+    <string name="please_wait_creating">please wait while creating user ..</string>
+    <string name="please_wait_save">please wait while we save changes</string>
 </resources>

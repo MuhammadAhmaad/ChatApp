@@ -35,6 +35,7 @@
         android:id="@+id/appWidget_profile_picture"
         android:layout_width="180dp"
         android:layout_height="180dp"
+        android:contentDescription="@string/widget_profile_image"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"/>
 

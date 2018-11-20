@@ -36,6 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_weight="1"
+            android:contentDescription="@string/send_media_button"
             android:background="@android:color/white"
             android:src="@drawable/ic_add_black_24dp" />
 
@@ -45,13 +46,14 @@
             android:layout_height="45dp"
             android:layout_weight="6"
             android:background="@android:color/white"
-            android:hint="Enter a message ..." />
+            android:hint="@string/enter_a_message" />
 
         <ImageButton
             android:id="@+id/chat_send_btn"
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_weight="1"
+            android:contentDescription="@string/send_message_button"
             android:background="@android:color/white"
             android:src="@drawable/ic_send_black_24dp" />
     </LinearLayout>

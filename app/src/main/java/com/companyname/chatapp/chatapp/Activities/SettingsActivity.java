@@ -59,7 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
         databaseReference.keepSynced(true);
         mStorageRef = FirebaseStorage.getInstance().getReference();
         mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setMessage("please wait while loading ..");
+        mProgressDialog.setMessage(getResources().getString(R.string.please_wait));
         mProgressDialog.show();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

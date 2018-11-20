@@ -36,7 +36,7 @@ public class UsersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_users);
         mToolbar = (Toolbar) findViewById(R.id.users_appBar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("All Users");
+        getSupportActionBar().setTitle(getResources().getString(R.string.all_users));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         recyclerView = (RecyclerView) findViewById(R.id.users_list);
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");

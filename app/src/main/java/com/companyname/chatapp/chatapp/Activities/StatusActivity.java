@@ -48,7 +48,7 @@ public class StatusActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mProgressDialog.setMessage("please wait while we save changes");
+                mProgressDialog.setMessage(getResources().getString(R.string.please_wait_save));
                 mProgressDialog.show();
                 final String status = mStatusInput.getEditText().getText().toString();
                 databaseReference.child("status").setValue(status).addOnCompleteListener(new OnCompleteListener<Void>() {

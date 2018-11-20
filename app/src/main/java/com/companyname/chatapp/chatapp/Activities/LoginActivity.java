@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.login_toolbar);
         progressDialog = new ProgressDialog(this);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Login");
+        getSupportActionBar().setTitle(getResources().getString(R.string.login));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mEmail = (TextInputLayout) findViewById(R.id.login_email);
         mPassword = (TextInputLayout) findViewById(R.id.login_password);

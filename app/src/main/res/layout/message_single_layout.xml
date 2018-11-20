@@ -45,6 +45,7 @@
         android:id="@+id/message_image_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/message_image_background"
         android:layout_alignStart="@+id/message_text_layout"
         android:layout_below="@+id/message_text_layout"
         android:src="@drawable/message_text_background" />

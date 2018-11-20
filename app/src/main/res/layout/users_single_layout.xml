@@ -37,6 +37,7 @@
         android:layout_height="15dp"
         android:visibility="gone"
         android:layout_marginTop="5dp"
+        android:contentDescription="@string/online_offline_indication"
         android:layout_alignTop="@+id/user_single_name"
         android:layout_marginStart="41dp"
         android:layout_toEndOf="@+id/user_single_name"
