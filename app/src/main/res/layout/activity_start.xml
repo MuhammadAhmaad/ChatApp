@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorPrimary"
-    tools:context="com.companyname.chatapp.chatapp.RegisterActivity">
+    tools:context="com.companyname.chatapp.chatapp.Activities.RegisterActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Welcome to ChatApp"
+        android:text="@string/welcome_to_chatapp"
         android:textSize="25dp"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="25dp"
@@ -21,7 +21,7 @@
         android:id="@+id/login_button"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:text="login"
+        android:text="@string/login"
         android:layout_marginBottom="5dp"
         android:background="@color/colorAccent"
         android:layout_gravity="center"/>
@@ -29,7 +29,7 @@
         android:id="@+id/register_button"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:text="create a new account"
+        android:text="@string/create_a_new_account"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="@android:color/white"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context="com.companyname.chatapp.chatapp.SettingsActivity">
+    tools:context="com.companyname.chatapp.chatapp.Activities.SettingsActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/profile_picture"
@@ -44,7 +44,7 @@
         android:layout_below="@+id/settings_status"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
-        android:text="CHANGE IMAGE" />
+        android:text="@string/change_image" />
 
     <Button
         android:id="@+id/settings_change_status"
@@ -54,7 +54,7 @@
         android:layout_alignStart="@+id/settings_change_image_btn"
         android:layout_below="@+id/settings_change_image_btn"
         android:layout_marginTop="11dp"
-        android:text="CHANGE STATUS" />
+        android:text="@string/change_status" />
 
 
 </RelativeLayout>

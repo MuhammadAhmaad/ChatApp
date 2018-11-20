@@ -9,8 +9,9 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
+import com.companyname.chatapp.chatapp.Activities.ProfileActivity;
+import com.companyname.chatapp.chatapp.Model.Globals;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Random;
@@ -41,7 +42,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         Intent resultIntent = new Intent(this,ProfileActivity.class);
         resultIntent.putExtra("user_id",from_user_id);
         final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_ONE_SHOT);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this,Globals.NOTIFICATION_CHANNEL_ID)
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, Globals.NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(notification_title)
                 .setContentText(notification_message)

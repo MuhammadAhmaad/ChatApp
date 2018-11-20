@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#282a2d"
-    tools:context="com.companyname.chatapp.chatapp.ProfileActivity">
+    tools:context="com.companyname.chatapp.chatapp.Activities.ProfileActivity">
 
     <ImageView
         android:id="@+id/profile_image_view"
@@ -22,7 +22,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="236dp"
-        android:text="Display Name"
+        tools:text="@string/display_name"
         android:textColor="@android:color/white"
         android:textSize="25dp" />
 
@@ -33,7 +33,7 @@
         android:layout_below="@+id/profile_display_name"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="21dp"
-        android:text="status"
+        tools:text="@string/status"
         android:textColor="@android:color/white"
         android:textSize="18dp" />
 
@@ -44,7 +44,7 @@
         android:layout_above="@+id/profile_send_request_button"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        android:text="total friends"
+        tools:text="@string/total_friends"
         android:textColor="@android:color/white"
         android:textSize="18dp" />
 
@@ -58,7 +58,7 @@
         android:background="@color/colorAccent"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="Send Friend Request"
+        android:text="@string/send_friend_request"
         android:textColor="@android:color/white" />
 
     <Button
@@ -71,7 +71,7 @@
         android:background="@color/colorAccent"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="Decline Friend Request"
+        android:text="@string/decline_friend_request"
         android:textColor="@android:color/white"
         android:enabled="false"
         android:visibility="invisible"/>

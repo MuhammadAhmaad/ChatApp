@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.companyname.chatapp.chatapp.RegisterActivity">
+    tools:context="com.companyname.chatapp.chatapp.Activities.RegisterActivity">
 
     <include
         android:id="@+id/register_toolbar"
@@ -29,7 +29,7 @@
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name" />
+            android:hint="@string/name" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -46,7 +46,7 @@
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress" />
     </android.support.design.widget.TextInputLayout>
 
@@ -64,7 +64,7 @@
         <android.support.design.widget.TextInputEditText
             android:layout_width="346dp"
             android:layout_height="wrap_content"
-            android:hint="password"
+            android:hint="@string/password"
             android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
@@ -75,10 +75,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:text="create account"
+        android:background="@color/colorAccent"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:background="@color/colorAccent"
+        android:text="@string/create_account"
         android:textColor="#ffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.905"
@@ -92,7 +92,7 @@
         android:layout_marginEnd="214dp"
         android:layout_marginStart="26dp"
         android:layout_marginTop="48dp"
-        android:text="create a new account"
+        android:text="@string/create_a_new_account"
         android:textColorLink="@android:color/background_dark"
         android:textSize="24dp"
         android:textStyle="bold"

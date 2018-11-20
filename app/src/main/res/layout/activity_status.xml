@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    tools:context="com.companyname.chatapp.chatapp.StatusActivity">
+    tools:context="com.companyname.chatapp.chatapp.Activities.StatusActivity">
 
     <include
         android:id="@+id/status_app_bar"
@@ -26,7 +25,7 @@
         <android.support.design.widget.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Your status" />
+            android:hint="@string/your_status" />
     </android.support.design.widget.TextInputLayout>
 
     <Button
@@ -39,7 +38,7 @@
         android:background="@color/colorAccent"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="Save Changes"
+        android:text="@string/save_changes"
         android:textColor="@android:color/white" />
 
 </RelativeLayout>

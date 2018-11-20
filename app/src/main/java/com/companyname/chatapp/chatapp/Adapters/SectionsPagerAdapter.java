@@ -1,14 +1,18 @@
-package com.companyname.chatapp.chatapp;
+package com.companyname.chatapp.chatapp.Adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.companyname.chatapp.chatapp.Fragments.ChatsFragment;
+import com.companyname.chatapp.chatapp.Fragments.FriendsFragment;
+import com.companyname.chatapp.chatapp.Fragments.RequestsFragment;
+
 /**
  * Created by Mohamed Ahmed on 6/11/2018.
  */
 
-class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public SectionsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -21,7 +25,7 @@ class SectionsPagerAdapter extends FragmentPagerAdapter {
                 RequestsFragment requestsFragment = new RequestsFragment();
                 return requestsFragment;
             case 1:
-                ChatsFragment  chatsFragment = new ChatsFragment();
+                ChatsFragment chatsFragment = new ChatsFragment();
                 return chatsFragment;
             case 2:
                 FriendsFragment friendsFragment = new FriendsFragment();

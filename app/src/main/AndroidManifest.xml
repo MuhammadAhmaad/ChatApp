@@ -18,36 +18,51 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StartActivity" />
+        <activity android:name=".Activities.StartActivity" />
         <activity
-            android:name=".RegisterActivity"
-            android:parentActivityName=".StartActivity" />
+            android:name=".Activities.RegisterActivity"
+            android:parentActivityName=".Activities.StartActivity" />
         <activity
-            android:name=".LoginActivity"
-            android:parentActivityName=".StartActivity" />
-        <activity android:name=".SettingsActivity" />
+            android:name=".Activities.LoginActivity"
+            android:parentActivityName=".Activities.StartActivity" />
+        <activity android:name=".Activities.SettingsActivity" />
         <activity
-            android:name=".StatusActivity"
-            android:parentActivityName=".SettingsActivity" />
+            android:name=".Activities.StatusActivity"
+            android:parentActivityName=".Activities.SettingsActivity" />
         <activity
-            android:name=".UsersActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".ProfileActivity">
+            android:name=".Activities.UsersActivity"
+            android:parentActivityName=".Activities.MainActivity" />
+        <activity android:name=".Activities.ProfileActivity">
             <intent-filter>
                 <action android:name="com.companyname.chatapp.chatapp_TARGET_NOTIFICATION" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ChatActivity"
-            android:parentActivityName=".MainActivity"></activity>
+        <activity
+            android:name=".Activities.ChatActivity"
+            android:parentActivityName=".Activities.MainActivity" />
+
+        <provider
+            android:name=".Database.UserProvider"
+            android:authorities="com.companyname.chatapp.StudentsProvider" />
+
+        <receiver android:name=".ChatAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/chat_app_widget_info" />
+        </receiver>
     </application>
 
 </manifest>

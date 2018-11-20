@@ -1,4 +1,4 @@
-package com.companyname.chatapp.chatapp;
+package com.companyname.chatapp.chatapp.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.companyname.chatapp.chatapp.R;
+import com.companyname.chatapp.chatapp.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;

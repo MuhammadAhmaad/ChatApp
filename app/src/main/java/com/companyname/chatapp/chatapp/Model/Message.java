@@ -1,10 +1,12 @@
-package com.companyname.chatapp.chatapp;
+package com.companyname.chatapp.chatapp.Model;
+
+import java.io.Serializable;
 
 /**
  * Created by Mohamed Ahmed on 6/30/2018.
  */
 
-public class Message {
+public class Message implements Serializable{
     private String message,type,from;
     private long time;
     private boolean seen;

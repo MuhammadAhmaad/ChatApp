@@ -1,20 +1,20 @@
-package com.companyname.chatapp.chatapp;
+package com.companyname.chatapp.chatapp.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.companyname.chatapp.chatapp.R;
+import com.companyname.chatapp.chatapp.Model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,6 +23,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UsersActivity extends AppCompatActivity {
 
+    private static final String POSITION = "position";
+    private int current_position = 0;
     private Toolbar mToolbar;
     private RecyclerView recyclerView;
     private DatabaseReference databaseReference;
@@ -42,6 +44,8 @@ public class UsersActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage("please wait while loading ..");
+        if (savedInstanceState != null)
+            current_position = savedInstanceState.getInt(POSITION);
     }
 
     @Override
@@ -63,14 +67,15 @@ public class UsersActivity extends AppCompatActivity {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent profileIntent = new Intent(UsersActivity.this,ProfileActivity.class);
-                        profileIntent.putExtra("user_id",user_id);
+                        Intent profileIntent = new Intent(UsersActivity.this, ProfileActivity.class);
+                        profileIntent.putExtra("user_id", user_id);
                         startActivity(profileIntent);
                     }
                 });
             }
         };
         recyclerView.setAdapter(firebaseRecyclerAdapter);
+        recyclerView.scrollToPosition(current_position);
     }
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
@@ -100,5 +105,11 @@ public class UsersActivity extends AppCompatActivity {
                             .placeholder(R.drawable.ic_person_black_24dp))
                     .into(userImageView);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(POSITION, recyclerView.getVerticalScrollbarPosition());
     }
 }

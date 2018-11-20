@@ -19,7 +19,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="14dp"
         android:layout_toEndOf="@+id/message_profile_layout"
-        android:text="Display name"
+        android:text="@string/display_name"
         android:textSize="17dp"
         android:textColor="@android:color/black"
         />
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/message_name_layout"
         android:layout_below="@+id/message_name_layout"
-        android:text="message text" />
+        android:text="@string/message_text" />
 
     <TextView
         android:id="@+id/message_time_layout"
@@ -39,7 +39,7 @@
         android:layout_alignBottom="@+id/message_name_layout"
         android:layout_marginStart="32dp"
         android:layout_toEndOf="@+id/message_name_layout"
-        android:text="00:00" />
+        android:text="@string/_00_00" />
 
     <ImageView
         android:id="@+id/message_image_layout"

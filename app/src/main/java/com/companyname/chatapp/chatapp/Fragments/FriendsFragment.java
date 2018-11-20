@@ -1,4 +1,4 @@
-package com.companyname.chatapp.chatapp;
+package com.companyname.chatapp.chatapp.Fragments;
 
 
 import android.app.AlertDialog;
@@ -17,6 +17,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.companyname.chatapp.chatapp.Activities.ChatActivity;
+import com.companyname.chatapp.chatapp.Activities.ProfileActivity;
+import com.companyname.chatapp.chatapp.Model.Friends;
+import com.companyname.chatapp.chatapp.R;
+import com.companyname.chatapp.chatapp.Model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +34,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FriendsFragment extends Fragment {
 
+    private static final String POSITION = "position";
+    private int current_position = 0;
     private RecyclerView mFriendsList;
     private DatabaseReference mFriendsDatabase;
     private DatabaseReference mUsersDatabase;
@@ -58,6 +65,8 @@ public class FriendsFragment extends Fragment {
 
         mFriendsList.setHasFixedSize(true);
         mFriendsList.setLayoutManager(new LinearLayoutManager(getContext()));
+        if (savedInstanceState != null)
+            current_position = savedInstanceState.getInt(POSITION);
         return mMainView;
     }
 
@@ -120,6 +129,7 @@ public class FriendsFragment extends Fragment {
             }
         };
         mFriendsList.setAdapter(friendsRecyclerAdapter);
+        mFriendsList.scrollToPosition(current_position);
     }
 
     public static class FriendsViewHolder extends RecyclerView.ViewHolder{
@@ -157,5 +167,9 @@ public class FriendsFragment extends Fragment {
                 icon.setVisibility(View.INVISIBLE);
         }
     }
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(POSITION, mFriendsList.getVerticalScrollbarPosition());
+    }
 }

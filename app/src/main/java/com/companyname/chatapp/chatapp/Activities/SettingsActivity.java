@@ -1,9 +1,8 @@
-package com.companyname.chatapp.chatapp;
+package com.companyname.chatapp.chatapp.Activities;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +14,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.companyname.chatapp.chatapp.Database.UserProvider;
+import com.companyname.chatapp.chatapp.R;
+import com.companyname.chatapp.chatapp.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,14 +29,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.iceteck.silicompressorr.SiliCompressor;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -121,6 +115,9 @@ public class SettingsActivity extends AppCompatActivity {
                         mProgressDialog.dismiss();
                         Toast.makeText(SettingsActivity.this, "uploaded", Toast.LENGTH_LONG).show();
                         String downloadUri = task.getResult().getDownloadUrl().toString();
+                        ContentValues values = new ContentValues();
+                        values.put(UserProvider.PHOTO_URL, downloadUri + ".jpg");
+                        getContentResolver().update(UserProvider.CONTENT_URI, values, null, null);
                         databaseReference.child("image").setValue(downloadUri + ".jpg");
                         databaseReference.child("thumbImages").setValue(downloadUri + ".jpg");
                     } else {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.companyname.chatapp.chatapp.UsersActivity">
+    tools:context="com.companyname.chatapp.chatapp.Activities.UsersActivity">
     <include layout="@layout/app_bar_layout" android:id="@+id/users_appBar"/>
 
     <android.support.v7.widget.RecyclerView

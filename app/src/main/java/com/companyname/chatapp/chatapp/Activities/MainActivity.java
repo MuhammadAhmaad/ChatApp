@@ -1,14 +1,21 @@
-package com.companyname.chatapp.chatapp;
+package com.companyname.chatapp.chatapp.Activities;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;;
+import android.view.MenuItem;
+import android.widget.Toast;;
 
+import com.companyname.chatapp.chatapp.Database.UserProvider;
+import com.companyname.chatapp.chatapp.R;
+import com.companyname.chatapp.chatapp.Adapters.SectionsPagerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +45,18 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout = (TabLayout) findViewById(R.id.main_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
         setSupportActionBar(mToolbar);
+
+        Cursor c = managedQuery(UserProvider.CONTENT_URI, null, null, null, null);
+
+        Log.e("SIZEEEEE",c.getCount()+"");
+        if (c.moveToFirst()) {
+            do {
+                Toast.makeText(this,
+                        c.getString(c.getColumnIndex(UserProvider.NAME)) +
+                                ", " + c.getString(c.getColumnIndex(UserProvider.STATUS)),
+                        Toast.LENGTH_SHORT).show();
+            } while (c.moveToNext());
+        }
     }
 
     @Override
@@ -48,10 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (currentUser == null) {
             sendToStart();
-        }
-        else {
-            mUserRef= FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
-            mUserRef.child("online").setValue((long)0);
+        } else {
+            mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
+            mUserRef.child("online").setValue((long) 0);
         }
     }
 
@@ -60,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            mUserRef= FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
+            mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
             mUserRef.child("online").setValue(ServerValue.TIMESTAMP);
         }
     }
@@ -83,13 +101,17 @@ public class MainActivity extends AppCompatActivity {
         super.onOptionsItemSelected(item);
         if (item.getItemId() == R.id.main_logout_item) {
             FirebaseAuth.getInstance().signOut();
+            //TODO delete the current user from db
+            getContentResolver().delete(
+                    UserProvider.CONTENT_URI, null, null);
+
             sendToStart();
         }
         if (item.getItemId() == R.id.account_settings_item) {
             startActivity(new Intent(MainActivity.this, SettingsActivity.class));
         }
         if (item.getItemId() == R.id.all_users_item) {
-            startActivity(new Intent(MainActivity.this,UsersActivity.class));
+            startActivity(new Intent(MainActivity.this, UsersActivity.class));
         }
         return true;
     }

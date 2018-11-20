@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.companyname.chatapp.chatapp.ChatsFragment">
+    tools:context="com.companyname.chatapp.chatapp.Fragments.ChatsFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/chats_list"

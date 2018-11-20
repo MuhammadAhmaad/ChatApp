@@ -1,4 +1,4 @@
-package com.companyname.chatapp.chatapp;
+package com.companyname.chatapp.chatapp.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -18,11 +18,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.companyname.chatapp.chatapp.Model.Message;
+import com.companyname.chatapp.chatapp.Adapters.MessageAdapter;
+import com.companyname.chatapp.chatapp.R;
+import com.companyname.chatapp.chatapp.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,9 +41,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -50,6 +53,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatActivity extends AppCompatActivity {
 
+    private static final String MESSAGE_LIST = "message_list";
+    private static final String CURRENT_POSITION ="current_position" ;
+    private static final String LAST_KEY ="last_key" ;
+    private static final String PREV_KEY ="prev_key" ;
     private String mChatUser;
     private Toolbar mToolbar;
     private TextView mTitleView;
@@ -64,7 +71,7 @@ public class ChatActivity extends AppCompatActivity {
     private DatabaseReference mRootRef;
     private RecyclerView mMessageList;
     private SwipeRefreshLayout mRefreshLayout;
-    private final List<Message> messageList = new ArrayList<>();
+    private List<Message> messageList = new ArrayList<>();
     private LinearLayoutManager mLinearLayout;
     private MessageAdapter mAdapter;
     private DatabaseReference mMessageDatabase;
@@ -118,8 +125,17 @@ public class ChatActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mCurrentUserId = mAuth.getCurrentUser().getUid();
 
-        loadMessages();
+        if (savedInstanceState != null) {
+            messageList = (List<Message>) savedInstanceState.getSerializable(MESSAGE_LIST);
+            currentPosition = savedInstanceState.getInt(CURRENT_POSITION);
+            mLastKey = savedInstanceState.getString(LAST_KEY);
+            mPrevKey = savedInstanceState.getString(PREV_KEY);
+            mAdapter.setmMessageList(messageList);
+            mMessageList.setAdapter(mAdapter);
 
+        } else {
+            loadMessages();
+        }
         mRootRef.child("Users").child(mChatUser).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -304,6 +320,7 @@ public class ChatActivity extends AppCompatActivity {
 
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -313,7 +330,6 @@ public class ChatActivity extends AppCompatActivity {
             final String push_id = user_message_push.getKey();
             final String current_user_ref = "messages/" + mCurrentUserId + "/" + mChatUser;
             final String chat_user_ref = "messages/" + mChatUser + "/" + mCurrentUserId;
-
 
 
             StorageReference filePath = mStorageRef.child("message_images").child(push_id + ".jpg");
@@ -346,4 +362,14 @@ public class ChatActivity extends AppCompatActivity {
             Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
         }
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(MESSAGE_LIST, (Serializable) messageList);
+        outState.putInt(CURRENT_POSITION,currentPosition);
+        outState.putString(LAST_KEY,mLastKey);
+        outState.putString(PREV_KEY,mPrevKey);
+    }
+
 }

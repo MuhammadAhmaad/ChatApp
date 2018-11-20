@@ -1,9 +1,7 @@
-package com.companyname.chatapp.chatapp;
+package com.companyname.chatapp.chatapp.Fragments;
 
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -18,6 +16,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.companyname.chatapp.chatapp.Activities.ChatActivity;
+import com.companyname.chatapp.chatapp.Model.Conv;
+import com.companyname.chatapp.chatapp.R;
+import com.companyname.chatapp.chatapp.Model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -36,6 +38,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ChatsFragment extends Fragment {
 
+    private static final String POSITION = "position";
+    private int current_position = 0;
     private RecyclerView mConvList;
 
     private DatabaseReference mConvDatabase;
@@ -71,6 +75,8 @@ public class ChatsFragment extends Fragment {
 
         mConvList.setHasFixedSize(true);
         mConvList.setLayoutManager(linearLayoutManager);
+        if (savedInstanceState != null)
+            current_position = savedInstanceState.getInt(POSITION);
         return mMainView;
     }
 
@@ -144,6 +150,7 @@ public class ChatsFragment extends Fragment {
 
         };
         mConvList.setAdapter(firebaseRecyclerAdapter);
+        mConvList.scrollToPosition(current_position);
     }
     public static class ConvViewHolder extends RecyclerView.ViewHolder{
         View mView;
@@ -185,5 +192,10 @@ public class ChatsFragment extends Fragment {
             TextView userNameView = (TextView) mView.findViewById(R.id.user_single_name);
             userNameView.setText(date);
         }
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(POSITION, mConvList.getVerticalScrollbarPosition());
     }
 }

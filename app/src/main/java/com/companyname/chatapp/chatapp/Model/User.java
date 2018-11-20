@@ -1,4 +1,4 @@
-package com.companyname.chatapp.chatapp;
+package com.companyname.chatapp.chatapp.Model;
 
 /**
  * Created by Mohamed Ahmed on 6/11/2018.
