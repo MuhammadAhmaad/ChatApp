@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword 'pass1234'
+            storeFile file("$rootDir/keystore.jks")
+            storePassword 'pass1234'
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.companyname.chatapp.chatapp"

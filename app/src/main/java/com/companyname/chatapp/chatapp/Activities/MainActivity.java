@@ -45,18 +45,6 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout = (TabLayout) findViewById(R.id.main_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
         setSupportActionBar(mToolbar);
-
-        Cursor c = managedQuery(UserProvider.CONTENT_URI, null, null, null, null);
-
-        Log.e("SIZEEEEE",c.getCount()+"");
-        if (c.moveToFirst()) {
-            do {
-                Toast.makeText(this,
-                        c.getString(c.getColumnIndex(UserProvider.NAME)) +
-                                ", " + c.getString(c.getColumnIndex(UserProvider.STATUS)),
-                        Toast.LENGTH_SHORT).show();
-            } while (c.moveToNext());
-        }
     }
 
     @Override

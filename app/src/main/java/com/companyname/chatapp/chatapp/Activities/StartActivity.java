@@ -26,12 +26,14 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(StartActivity.this, RegisterActivity.class));
+                overridePendingTransition(R.anim.slide_from_right, R.anim.fade_out);
             }
         });
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(StartActivity.this, LoginActivity.class));
+                overridePendingTransition(R.anim.slide_from_right, R.anim.fade_out);
             }
         });
 

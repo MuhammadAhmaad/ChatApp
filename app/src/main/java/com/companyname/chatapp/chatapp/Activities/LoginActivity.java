@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void aVoid) {
                             startActivity(new Intent(LoginActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                            overridePendingTransition(R.anim.slide_from_right, R.anim.fade_out);
                             finish();
                         }
                     });

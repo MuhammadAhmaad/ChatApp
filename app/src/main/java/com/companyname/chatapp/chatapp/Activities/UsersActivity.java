@@ -70,6 +70,7 @@ public class UsersActivity extends AppCompatActivity {
                         Intent profileIntent = new Intent(UsersActivity.this, ProfileActivity.class);
                         profileIntent.putExtra("user_id", user_id);
                         startActivity(profileIntent);
+                        overridePendingTransition(R.anim.slide_from_right, R.anim.fade_out);
                     }
                 });
             }
