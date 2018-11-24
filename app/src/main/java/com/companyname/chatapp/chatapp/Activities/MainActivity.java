@@ -1,8 +1,9 @@
 package com.companyname.chatapp.chatapp.Activities;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,16 +12,22 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;;
+;
 
-import com.companyname.chatapp.chatapp.Database.UserProvider;
+import com.companyname.chatapp.chatapp.ChatAppWidget;
+import com.companyname.chatapp.chatapp.Database.ChatsProvider;
+import com.companyname.chatapp.chatapp.Model.User;
 import com.companyname.chatapp.chatapp.R;
 import com.companyname.chatapp.chatapp.Adapters.SectionsPagerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
 
     private DatabaseReference mUserRef;
+
+
+    private DatabaseReference mConvDatabase;
+    private DatabaseReference mMessageDatabase;
+    private DatabaseReference mUsersDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +57,78 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout = (TabLayout) findViewById(R.id.main_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
         setSupportActionBar(mToolbar);
+
+
+
+    }
+
+    private void arrangeChatDB() {
+        mConvDatabase = FirebaseDatabase.getInstance().getReference().child("Chat").child(mAuth.getCurrentUser().getUid());
+        mMessageDatabase = FirebaseDatabase.getInstance().getReference().child("messages").child(mAuth.getCurrentUser().getUid());
+        mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+
+
+        getContentResolver().delete(
+                ChatsProvider.CONTENT_URI, null, null);
+        mConvDatabase.orderByChild("timpestamp").limitToFirst(10).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot d : dataSnapshot.getChildren()) {
+                    final String list_user_id = d.getKey();
+                    mMessageDatabase.child(list_user_id).limitToLast(1).addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            final String message = dataSnapshot.child("message").getValue().toString();
+                            mUsersDatabase.child(list_user_id).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    User user_list = dataSnapshot.getValue(User.class);
+                                    String name = user_list.getName();
+                                    ContentValues values = new ContentValues();
+                                    values.put(ChatsProvider.NAME, name);
+                                    values.put(ChatsProvider.MESSAGE, message);
+                                    values.put(ChatsProvider.FIREBASEID,list_user_id);
+                                    getContentResolver().insert(
+                                            ChatsProvider.CONTENT_URI, values);
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
@@ -58,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
             mUserRef.child("online").setValue((long) 0);
+            arrangeChatDB();
         }
     }
 
@@ -91,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
             FirebaseAuth.getInstance().signOut();
             //TODO delete the current user from db
             getContentResolver().delete(
-                    UserProvider.CONTENT_URI, null, null);
+                    ChatsProvider.CONTENT_URI, null, null);
 
             sendToStart();
         }

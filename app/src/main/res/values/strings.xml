@@ -45,4 +45,7 @@
     <string name="please_wait">Please Wait While loading ..</string>
     <string name="please_wait_creating">please wait while creating user ..</string>
     <string name="please_wait_save">please wait while we save changes</string>
+    <string name="latest_chats">Latest Chats</string>
+
+    <string name="colon">:</string>
 </resources>

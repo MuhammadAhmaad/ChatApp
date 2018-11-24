@@ -1,5 +1,6 @@
 package com.companyname.chatapp.chatapp;
 
+import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -9,20 +10,27 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.companyname.chatapp.chatapp.Activities.SettingsActivity;
-import com.companyname.chatapp.chatapp.Database.UserProvider;
+import com.companyname.chatapp.chatapp.Database.ChatsProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class ChatAppWidget extends AppWidgetProvider {
+    static List<String> mCollection = new ArrayList<>();
+    static List<String> mIDS = new ArrayList<>();
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
@@ -30,19 +38,30 @@ public class ChatAppWidget extends AppWidgetProvider {
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.chat_app_widget);
 
-        Intent intent = new Intent(context, SettingsActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        Cursor c = context.getContentResolver().query(UserProvider.CONTENT_URI, null, null, null, "name");
 
-        if (c.moveToFirst()) {
-            views.setTextViewText(R.id.appwidget_user_name, c.getString(c.getColumnIndex(UserProvider.NAME)));
-            views.setTextViewText(R.id.appwidget_user_status, c.getString(c.getColumnIndex(UserProvider.STATUS)));
-            new DownloadBitmap(views, appWidgetManager, c.getString(c.getColumnIndex(UserProvider.PHOTO_URL)), appWidgetId).execute();
+
+        Cursor c = context.getContentResolver().query(ChatsProvider.CONTENT_URI, null, null, null, null);
+        Log.e("Sdfsdfsd",c.getCount()+"");
+        for(int i = 0;i<c.getCount();i++)
+        {
+            c.moveToNext();
+            String name = c.getString(c.getColumnIndex(ChatsProvider.NAME));
+            String message = c.getString(c.getColumnIndex(ChatsProvider.MESSAGE));
+            String id = c.getColumnName(c.getColumnIndex(ChatsProvider.FIREBASEID));
+            Log.e("#################",name+message);
+
+            mCollection.add(name+context.getString(R.string.colon)+message);
+            mIDS.add(id);
+
         }
-        views.setOnClickPendingIntent(R.id.appwidget_user_name, pendingIntent);
-        views.setOnClickPendingIntent(R.id.appwidget_user_status, pendingIntent);
-        views.setOnClickPendingIntent(R.id.appWidget_profile_picture, pendingIntent);
 
+
+        // Set up the collection
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            setRemoteAdapter(context, views);
+        } else {
+            setRemoteAdapterV11(context, views);
+        }
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
@@ -63,42 +82,21 @@ public class ChatAppWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 
-    public static class DownloadBitmap extends AsyncTask<String, Void, Bitmap> {
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    private static void setRemoteAdapter(Context context, @NonNull final RemoteViews views) {
+        views.setRemoteAdapter(R.id.widget_list,
+                new Intent(context, WidgetService.class));
+    }
 
-        private int appwidgetId;
-        private AppWidgetManager appwidgetManager;
-        RemoteViews views;
-        Context context;
-        String url = "";
-
-        public DownloadBitmap(RemoteViews views, AppWidgetManager appWidgetManager, String url, int appWidgetID) {
-            this.views = views;
-            this.url = url;
-            this.appwidgetManager = appWidgetManager;
-            this.appwidgetId = appWidgetID;
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... params) {
-            try {
-                URL ur = new URL(url);
-                HttpURLConnection connection = (HttpURLConnection) ur.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                return myBitmap;
-            } catch (IOException e) {
-                return null;
-            }
-        }
-
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            views.setImageViewBitmap(R.id.appWidget_profile_picture, bitmap);
-            appwidgetManager.updateAppWidget(appwidgetId, views);
-        }
+    /**
+     * Sets the remote adapter used to fill in the list items
+     *
+     * @param views RemoteViews to set the RemoteAdapter
+     */
+    @SuppressWarnings("deprecation")
+    private static void setRemoteAdapterV11(Context context, @NonNull final RemoteViews views) {
+        views.setRemoteAdapter(0, R.id.widget_list,
+                new Intent(context, WidgetService.class));
     }
 }
 

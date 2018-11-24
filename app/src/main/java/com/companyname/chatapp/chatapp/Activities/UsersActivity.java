@@ -3,16 +3,19 @@ package com.companyname.chatapp.chatapp.Activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.companyname.chatapp.chatapp.Database.ChatsProvider;
 import com.companyname.chatapp.chatapp.R;
 import com.companyname.chatapp.chatapp.Model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -46,6 +49,7 @@ public class UsersActivity extends AppCompatActivity {
         mProgressDialog.setMessage("please wait while loading ..");
         if (savedInstanceState != null)
             current_position = savedInstanceState.getInt(POSITION);
+
     }
 
     @Override

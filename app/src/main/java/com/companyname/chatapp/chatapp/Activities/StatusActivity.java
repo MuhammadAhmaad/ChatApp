@@ -1,9 +1,7 @@
 package com.companyname.chatapp.chatapp.Activities;
 
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.companyname.chatapp.chatapp.Database.UserProvider;
 import com.companyname.chatapp.chatapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -56,10 +53,10 @@ public class StatusActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             mProgressDialog.dismiss();
-                            ContentValues values = new ContentValues();
-                            values.put(UserProvider.STATUS, status);
-                            getContentResolver().update(UserProvider.CONTENT_URI, values, null, null);
-                            finish();
+//                            ContentValues values = new ContentValues();
+//                            values.put(UserProvider.MESSAGE, status);
+//                            getContentResolver().update(UserProvider.CONTENT_URI, values, null, null);
+//                            finish();
 
                         } else {
                             mProgressDialog.hide();

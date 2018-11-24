@@ -16,18 +16,18 @@ import android.text.TextUtils;
 import java.util.HashMap;
 
 /**
- * Created by Mohamed Ahmed on 11/20/2018.
+ * Created by Mohamed Ahmed on 11/24/2018.
  */
 
-public class UserProvider extends ContentProvider {
-    static final String PROVIDER_NAME = "com.companyname.chatapp.StudentsProvider";
-    static final String URL = "content://" + PROVIDER_NAME + "/user";
+public class ChatsProvider extends ContentProvider {
+    static final String PROVIDER_NAME = "com.companyname.chatapp.ChatsProvider";
+    static final String URL = "content://" + PROVIDER_NAME + "/chat";
     public static final Uri CONTENT_URI = Uri.parse(URL);
 
     static final String _ID = "_id";
     public static final String NAME = "name";
-    public static final String STATUS = "status";
-    public static final String PHOTO_URL = "url";
+    public static final String MESSAGE = "message";
+    public static final String FIREBASEID= "fire_id";
 
     private static HashMap<String, String> STUDENTS_PROJECTION_MAP;
 
@@ -38,8 +38,8 @@ public class UserProvider extends ContentProvider {
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(PROVIDER_NAME, "user", USER);
-        uriMatcher.addURI(PROVIDER_NAME, "user/#", USER_ID);
+        uriMatcher.addURI(PROVIDER_NAME, "chat", USER);
+        uriMatcher.addURI(PROVIDER_NAME, "chat/#", USER_ID);
     }
 
     /**
@@ -48,22 +48,22 @@ public class UserProvider extends ContentProvider {
 
     private SQLiteDatabase db;
     static final String DATABASE_NAME = "ChatApp";
-    static final String USER_TABLE_NAME = "user";
+    static final String USER_TABLE_NAME = "chat";
     static final int DATABASE_VERSION = 1;
     static final String CREATE_DB_TABLE =
             " CREATE TABLE " + USER_TABLE_NAME +
                     " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    " name TEXT NOT NULL, " +
-                    " status TEXT NOT NULL, " +
-                    " url TEXT NOT NULL);";
+                    " name TEXT , " +
+                    " fire_id TEXT , " +
+                    " message TEXT );";
 
     /**
      * Helper class that actually creates and manages
      * the provider's underlying data repository.
      */
 
-    private static class DatabaseHelper extends SQLiteOpenHelper {
-        DatabaseHelper(Context context) {
+    public static class DatabaseHelper extends SQLiteOpenHelper {
+        public DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
 
@@ -82,7 +82,7 @@ public class UserProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         Context context = getContext();
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        ChatsProvider.DatabaseHelper dbHelper = new ChatsProvider.DatabaseHelper(context);
 
         /**
          * Create a write able database which will trigger its
@@ -193,14 +193,15 @@ public class UserProvider extends ContentProvider {
              * Get all user records
              */
             case USER:
-                return "vnd.android.cursor.dir/vnd.example.user";
+                return "vnd.android.cursor.dir/vnd.example.chat";
             /**
              * Get a particular user
              */
             case USER_ID:
-                return "vnd.android.cursor.item/vnd.example.user";
+                return "vnd.android.cursor.item/vnd.example.chat";
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
     }
 }
+

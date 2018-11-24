@@ -50,10 +50,6 @@
             android:name=".Activities.ChatActivity"
             android:parentActivityName=".Activities.MainActivity" />
 
-        <provider
-            android:name=".Database.UserProvider"
-            android:authorities="com.companyname.chatapp.StudentsProvider" />
-
         <receiver android:name=".ChatAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -63,6 +59,11 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/chat_app_widget_info" />
         </receiver>
+        <service android:name=".WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <provider android:name=".Database.ChatsProvider"
+            android:authorities="com.companyname.chatapp.ChatsProvider"/>
+
     </application>
 
 </manifest>

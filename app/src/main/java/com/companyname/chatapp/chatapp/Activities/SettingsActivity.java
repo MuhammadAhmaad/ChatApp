@@ -1,7 +1,6 @@
 package com.companyname.chatapp.chatapp.Activities;
 
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.companyname.chatapp.chatapp.Database.UserProvider;
 import com.companyname.chatapp.chatapp.R;
 import com.companyname.chatapp.chatapp.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -115,9 +113,9 @@ public class SettingsActivity extends AppCompatActivity {
                         mProgressDialog.dismiss();
                         Toast.makeText(SettingsActivity.this, "uploaded", Toast.LENGTH_LONG).show();
                         String downloadUri = task.getResult().getDownloadUrl().toString();
-                        ContentValues values = new ContentValues();
-                        values.put(UserProvider.PHOTO_URL, downloadUri + ".jpg");
-                        getContentResolver().update(UserProvider.CONTENT_URI, values, null, null);
+//                        ContentValues values = new ContentValues();
+//                        values.put(UserProvider.PHOTO_URL, downloadUri + ".jpg");
+//                        getContentResolver().update(UserProvider.CONTENT_URI, values, null, null);
                         databaseReference.child("image").setValue(downloadUri + ".jpg");
                         databaseReference.child("thumbImages").setValue(downloadUri + ".jpg");
                     } else {

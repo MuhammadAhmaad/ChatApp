@@ -1,9 +1,7 @@
 package com.companyname.chatapp.chatapp.Activities;
 
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.companyname.chatapp.chatapp.Database.UserProvider;
 import com.companyname.chatapp.chatapp.R;
 import com.companyname.chatapp.chatapp.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -93,13 +90,13 @@ public class RegisterActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-                            ContentValues values = new ContentValues();
-                            values.put(UserProvider.NAME, userData.getName());
-                            values.put(UserProvider.STATUS, userData.getStatus());
-                            values.put(UserProvider.PHOTO_URL, userData.getImage());
-
-                            getContentResolver().insert(
-                                    UserProvider.CONTENT_URI, values);
+//                            ContentValues values = new ContentValues();
+//                            values.put(UserProvider.NAME, userData.getName());
+//                            values.put(UserProvider.MESSAGE, userData.getStatus());
+//                            values.put(UserProvider.PHOTO_URL, userData.getImage());
+//
+//                            getContentResolver().insert(
+//                                    UserProvider.CONTENT_URI, values);
 
 
                         } else {
