@@ -4,6 +4,7 @@
     android:layout_margin="@dimen/widget_margin">
 
     <LinearLayout
+        android:id="@+id/widget_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background0"
@@ -20,6 +21,7 @@
                 android:id="@+id/widget_img_launcher"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:contentDescription="@string/logo_photo"
                 android:layout_gravity="center_vertical"
                 android:src="@mipmap/ic_launcher"/>
             <TextView
@@ -30,7 +32,8 @@
                 android:textColor="@android:color/black"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="bold"
-                android:paddingStart="15dp"/>
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"/>
         </LinearLayout>
         <ListView
             android:id="@+id/widget_list"

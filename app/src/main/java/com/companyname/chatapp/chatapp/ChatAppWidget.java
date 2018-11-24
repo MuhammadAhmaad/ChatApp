@@ -9,12 +9,15 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.companyname.chatapp.chatapp.Activities.ChatActivity;
+import com.companyname.chatapp.chatapp.Activities.MainActivity;
 import com.companyname.chatapp.chatapp.Activities.SettingsActivity;
 import com.companyname.chatapp.chatapp.Database.ChatsProvider;
 
@@ -29,6 +32,7 @@ import java.util.List;
  * Implementation of App Widget functionality.
  */
 public class ChatAppWidget extends AppWidgetProvider {
+    public static final String EXTRA_ITEM = "position";
     static List<String> mCollection = new ArrayList<>();
     static List<String> mIDS = new ArrayList<>();
 
@@ -37,19 +41,16 @@ public class ChatAppWidget extends AppWidgetProvider {
 
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.chat_app_widget);
-
-
+        Intent intent = new Intent(context, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         Cursor c = context.getContentResolver().query(ChatsProvider.CONTENT_URI, null, null, null, null);
-        Log.e("Sdfsdfsd",c.getCount()+"");
         for(int i = 0;i<c.getCount();i++)
         {
             c.moveToNext();
             String name = c.getString(c.getColumnIndex(ChatsProvider.NAME));
             String message = c.getString(c.getColumnIndex(ChatsProvider.MESSAGE));
             String id = c.getColumnName(c.getColumnIndex(ChatsProvider.FIREBASEID));
-            Log.e("#################",name+message);
-
             mCollection.add(name+context.getString(R.string.colon)+message);
             mIDS.add(id);
 
@@ -62,13 +63,30 @@ public class ChatAppWidget extends AppWidgetProvider {
         } else {
             setRemoteAdapterV11(context, views);
         }
+        views.setOnClickPendingIntent(R.id.widget_layout,pendingIntent);
+
+//        Intent svcIntent=new Intent(context, WidgetService.class);
+//
+//        svcIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+//        svcIntent.setData(Uri.parse(svcIntent.toUri(Intent.URI_INTENT_SCHEME)));
+//
+//        Intent clickIntent=new Intent(context, MainActivity.class);
+//        PendingIntent clickPI=PendingIntent
+//                .getActivity(context, 0,
+//                        clickIntent,
+//                        PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        views.setPendingIntentTemplate(R.id.widget_list, clickPI);
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
+
+
             updateAppWidget(context, appWidgetManager, appWidgetId);
+
         }
     }
 
